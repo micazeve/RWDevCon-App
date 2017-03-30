@@ -135,7 +135,7 @@ class ScheduleDataSource: NSObject {
     return ["Header": distinctTimes[section]]
   }
   
-  fileprivate func resetCache() {
+  func resetCache() {
     reloadCacheAllSessions = true
     dicoCacheSessions.removeAll()
     distTimes = []

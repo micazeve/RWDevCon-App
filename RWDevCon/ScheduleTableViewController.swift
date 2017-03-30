@@ -62,6 +62,7 @@ class ScheduleTableViewController: UITableViewController {
 
     NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: MyScheduleSomethingChangedNotification), object: nil, queue: OperationQueue.main) { (notification) -> Void in
       if self.isActive || self.dataSource.favoritesOnly {
+        self.dataSource.resetCache()
         self.refreshSelectively()
       }
     }

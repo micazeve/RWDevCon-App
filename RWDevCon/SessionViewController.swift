@@ -243,17 +243,21 @@ class SessionViewController: UITableViewController {
     }
     
     if let conflictingIdentifier = Config.conflictingFavoriteIdentifier(session), let conflictingSession = scheduleDataSource.session(with: conflictingIdentifier) {
-      let alert = UIAlertController(title: "Replace Existing Session?", message: "You've already added \"\(conflictingSession.title)\" to your schedule for this timeslot. Do you want to replace it?", preferredStyle: .actionSheet)
-      let replaceAction = UIAlertAction(title: "Replace", style: .destructive) { (_) in
+      
+      if session.identifier == conflictingIdentifier {
         setFavoriteBlock()
+      } else {
+        let alert = UIAlertController(title: "Replace Existing Session?", message: "You've already added \"\(conflictingSession.title)\" to your schedule for this timeslot. Do you want to replace it?", preferredStyle: .actionSheet)
+        let replaceAction = UIAlertAction(title: "Replace", style: .destructive) { (_) in
+          setFavoriteBlock()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(replaceAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
       }
-      
-      let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-      
-      alert.addAction(replaceAction)
-      alert.addAction(cancelAction)
-      
-      present(alert, animated: true, completion: nil)
     } else {
       setFavoriteBlock()
     }
